@@ -80,8 +80,8 @@ public class FormularioProducto extends JDialog {
 		tfCaracteristicas.setBounds(99, 137, 205, 22);
 		contentPanel.add(tfCaracteristicas);
 		
-		TfGeneric tfPrecioCosto = new TfGeneric();
-		tfPrecioCosto.setBounds(99, 205, 113, 22);
-		contentPanel.add(tfPrecioCosto);
+		TfGeneric tfCosto = new TfGeneric();
+		tfCosto.setBounds(99, 205, 113, 22);
+		contentPanel.add(tfCosto);
 	}
 }

@@ -17,6 +17,7 @@ public class Productos implements Serializable {
 	private int id;
 	private String nombre;
 	private double PrecioCosto;
+	private String caracteris;
 	private double porcentaje;
 	private static final long serialVersionUID = 1L;
 
@@ -50,6 +51,12 @@ public class Productos implements Serializable {
 
 	public void setPorcentaje(double porcentaje) {
 		this.porcentaje = porcentaje;
+	}
+	public String getCaracteris() {
+		return caracteris;
+	}
+	public void setCaracteris(String caracteris) {
+		this.caracteris = caracteris;
 	}
    
 }

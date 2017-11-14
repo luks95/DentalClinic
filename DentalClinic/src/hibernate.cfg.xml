@@ -30,18 +30,20 @@
 
    <!-- List of Class mapping -->
  
-    <mapping class="consultorio.entidad.Configuracion"/>
-	<mapping class="consultorio.entidad.Doctor"/>
-	<mapping class="consultorio.entidad.Funcionalidad"/>
-	<mapping class="consultorio.entidad.Login"/>
-	<mapping class="consultorio.entidad.Moneda"/>
-	<mapping class="consultorio.entidad.Paciente"/>
-	<mapping class="consultorio.entidad.Perfil"/>
-	<mapping class="consultorio.entidad.Perfil_Funcionalidad"/>
-	<mapping class="consultorio.entidad.Cambio"/>
-	<mapping class="consultorio.entidad.Servicio"/>
-	<mapping class="consultorio.entidad.Usuario"/>
-	<mapping class="consultorio.entidad.Cita"/>
+    <mapping class="consultorio.modelo.Configuracion"/>
+	<mapping class="consultorio.modelo.Doctor"/>
+	<mapping class="consultorio.modelo.Funcionalidad"/>
+	<mapping class="consultorio.modelo.Login"/>
+	<mapping class="consultorio.modelo.Moneda"/>
+	<mapping class="consultorio.modelo.Paciente"/>
+	<mapping class="consultorio.modelo.Perfil"/>
+	<mapping class="consultorio.modelo.Perfil_Funcionalidad"/>
+	<mapping class="consultorio.modelo.Cambio"/>
+	<mapping class="consultorio.modelo.Servicio"/>
+	<mapping class="consultorio.modelo.Usuario"/>
+	<mapping class="consultorio.modelo.Cita"/>
+	<mapping class="consultorio.modelo.Productos"/>
+	<mapping class="consultorio.modelo.Servcios_Productos"/>
 	
 </session-factory>
 </hibernate-configuration>

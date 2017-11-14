@@ -30,7 +30,6 @@
 
    <!-- List of Class mapping -->
  
- 
     <mapping class="consultorio.modelo.Configuracion"/>
 	<mapping class="consultorio.modelo.Doctor"/>
 	<mapping class="consultorio.modelo.Funcionalidad"/>

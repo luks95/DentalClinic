@@ -2,14 +2,14 @@ package consultorio.swing.componentes;
 
 import java.util.List; 
 import javax.swing.table.AbstractTableModel;
-import consultorio.modelo.Productos;
+import consultorio.modelo.Producto;
 
 public class ModeloTalblaProductos extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 	private String columnas[] = { "Id", "Nombre", "Caracteristicas", "Costo Unitario", "Porcentaje"};
 	private Object datos[][] = new Object[0][0];
 
-	public void setLista(List<Productos> lista) {
+	public void setLista(List<Producto> lista) {
 		datos = new Object[lista.size()][5];
 		for (int i = 0; i < lista.size(); i++) {
 			datos[i][0] = lista.get(i).getId();

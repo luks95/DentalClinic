@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 
-public class Productos implements Serializable {
+public class Producto implements Serializable {
 
 	   
 	@Id
@@ -21,7 +21,7 @@ public class Productos implements Serializable {
 	private double porcentaje;
 	private static final long serialVersionUID = 1L;
 
-	public Productos() {
+	public Producto() {
 		super();
 	}   
 	public int getId() {

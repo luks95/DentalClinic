@@ -156,8 +156,6 @@ public class FormularioServicio extends JDialog {
 	public int getvRe() {
 		return vRe;
 	}
-	
-	
 
 	public Servicio getSerRecibido() {
 		return serRecibido;

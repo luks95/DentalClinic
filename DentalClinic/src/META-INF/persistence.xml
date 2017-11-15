@@ -16,7 +16,7 @@
 		<class>consultorio.modelo.Servicio</class>
 		<class>consultorio.modelo.Usuario</class>
 		<class>consultorio.modelo.Cita</class>
-		<class>consultorio.modelo.Productos</class>
+		<class>consultorio.modelo.Producto</class>
 		<class>consultorio.modelo.Servcios_Productos</class>
 	
 		<properties>

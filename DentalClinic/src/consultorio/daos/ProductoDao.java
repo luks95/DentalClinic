@@ -21,7 +21,7 @@ public class ProductoDao extends DaoGenerico<Producto> {
 
 		instanciarCriteria();
 		criteriaQuery.where(
-				builder.or(builder.like(builder.lower(root.<String>get("nombreServicio")), "%" + filtro.toLowerCase() + "%"),
+				builder.or(builder.like(builder.lower(root.<String>get("nombre")), "%" + filtro.toLowerCase() + "%"),
 						builder.equal(root.<Integer>get("codigoSer"), filtroId)));
 		lista = session.createQuery(criteriaQuery).getResultList();
 		cerrar();

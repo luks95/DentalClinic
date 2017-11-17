@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import consultorio.daos.LoginDao;
 import consultorio.modelo.Login;
 import consultorio.swing.abm.ListaPacientes;
+import consultorio.swing.abm.ListaProductos;
 import consultorio.swing.abm.ListaProfecionales;
 import consultorio.swing.abm.ListaServicios;
 import consultorio.swing.config.GestionUsuarios;
@@ -41,13 +42,6 @@ public class Menu {
 	 * Launch the application.
 	 */
 	public static void main(final Login l) {
-		// try {
-		// BeautyEyeLNFHelper.frameBorderStyle =
-		// BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated ;
-		// org.jb2011
-		// .lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
-		// } catch (Exception e) {
-		// }
 
 		loginSesion = l;
 		EventQueue.invokeLater(new Runnable() {
@@ -146,6 +140,16 @@ public class Menu {
 		});
 		mntmProfecional.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mnRegistros.add(mntmProfecional);
+		
+		JMenuItem mntmProducto = new JMenuItem("Producto");
+		mntmProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ListaProductos lProdu = new ListaProductos();
+				lProdu.setVisible(true);
+				lProdu.setupController();
+			}
+		});
+		mnRegistros.add(mntmProducto);
 		
 		JMenu mnMovimientos = new JMenu("Movimientos");
 		menuBar.add(mnMovimientos);

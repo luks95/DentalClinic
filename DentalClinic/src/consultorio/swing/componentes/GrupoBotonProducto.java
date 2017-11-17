@@ -55,6 +55,11 @@ public class GrupoBotonProducto extends JPanel implements ActionListener , KeyLi
 	}
 	
 	private void setupEventManager() {
+		btnNuevo.addActionListener(this);
+		btnGuardar.addActionListener(this);
+		btnModificar.addActionListener(this);
+		btnCancelar.addActionListener(this);
+		btnCancelar.addKeyListener(this);
 	}
 	
 	@Override

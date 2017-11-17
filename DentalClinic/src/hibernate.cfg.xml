@@ -42,7 +42,7 @@
 	<mapping class="consultorio.modelo.Servicio"/>
 	<mapping class="consultorio.modelo.Usuario"/>
 	<mapping class="consultorio.modelo.Cita"/>
-	<mapping class="consultorio.modelo.Productos"/>
+	<mapping class="consultorio.modelo.Producto"/>
 	<mapping class="consultorio.modelo.Servcios_Productos"/>
 	
 </session-factory>

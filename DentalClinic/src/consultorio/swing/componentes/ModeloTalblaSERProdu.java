@@ -16,8 +16,9 @@ public class ModeloTalblaSERProdu extends AbstractTableModel {
 		
 		datos = new Object[lista.size()][4];
 		for (int i = 0; i < lista.size(); i++) {
+			////
 			System.out.println(lista.get(i).getNombre()+" "+lista.get(i).getB());
-			
+			////
 			datos[i][0] = lista.get(i).getId();
 			datos[i][1] = lista.get(i).getNombre();
 			datos[i][2] = lista.get(i).getPorcentaje()+lista.get(i).getPrecioCosto();

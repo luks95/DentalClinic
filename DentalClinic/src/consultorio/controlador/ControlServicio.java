@@ -33,6 +33,10 @@ public class ControlServicio implements AcionesBasicas {
 	private Servcios_Productos servPro;
 	private List<Servcios_Productos> detalleServ;
 	
+	////// esta variable sirve para identificar cuando queremos modificar o 
+	////// guardar algun servicio "bandera".
+	private int bandera;
+	//////
 	
 	public ControlServicio(FormularioServicio formPro, ListaServicios lForm) {
 		if(formPro == null){
@@ -61,7 +65,8 @@ public class ControlServicio implements AcionesBasicas {
 	@Override
 	public void modificar() {
 			form.getGrupoBotonServicio().getBtnModificar().setEnabled(false);
-			estadoInicial(true);			
+			estadoInicial(true);
+			bandera = 0;
 	}
 
 	@Override
@@ -129,6 +134,7 @@ public class ControlServicio implements AcionesBasicas {
 		form.getLblCodigo().setText("");
 		ComBasicos.limpiarTf(listaTf);
 		recuperarProductos();
+		bandera = 0;
 	}
 	
 	private void estadoInicial(boolean b){
@@ -161,14 +167,28 @@ public class ControlServicio implements AcionesBasicas {
 		detalleServ = new ArrayList<>();
 		
 		recuperarSoloProducto();
-		recuperarItem(); 
+		
 		for (int i = 0; i < listaProduc2.size(); i++) {
-			
-			for (int j = 0; j < listaItem.size(); j++) {
+			if(bandera ==1){
+				System.out.println("bandera 1");
+				recuperarItem(); 
+				for (int j = 0; j < listaItem.size(); j++) {
 				
-				if((form.getGrupoBotonServicio().getmServProdu().recuperarEstado(i)) == true &&
-						(servicios.getCodigoSer() != listaItem.get(j).getServicio().getCodigoSer())&&
-						(listaProduc2.get(i).getId() != listaItem.get(j).getProducto().getId())){
+					if((form.getGrupoBotonServicio().getmServProdu().recuperarEstado(i)) == true &&
+							(servicios.getCodigoSer() != listaItem.get(j).getServicio().getCodigoSer())&&
+							(listaProduc2.get(i).getId() != listaItem.get(j).getProducto().getId())){
+						servPro = new Servcios_Productos();
+						producto = listaProduc2.get(i);
+						System.out.println("Producto sumado a la lista "+producto.getNombre());
+						servPro.setServicio(servicios);
+						servPro.setProducto(producto);
+						detalleServ.add(servPro);
+					}
+				}	
+			} else{	
+				if(form.getGrupoBotonServicio().getmServProdu().recuperarEstado(i) == true){
+				
+					System.out.println("bandera 0");
 					servPro = new Servcios_Productos();
 					producto = listaProduc2.get(i);
 					System.out.println("Producto sumado a la lista "+producto.getNombre());
@@ -176,12 +196,13 @@ public class ControlServicio implements AcionesBasicas {
 					servPro.setProducto(producto);
 					detalleServ.add(servPro);
 				}
-				
-			}	
-			
+			}
+						
+							
 		}
-		
 	}
+		
+	
 	
 	private void verify() {
 		/// verify() se encarga de realizar acciones dependiendo de lo que recibe ListaProfecionales()
@@ -195,6 +216,7 @@ public class ControlServicio implements AcionesBasicas {
 			form.getTfTipoNombre().requestFocus();
 			estadoInicial(true);
 			recuperarProductos();
+			bandera = 0;
 		}
 
 		/// Modifica
@@ -202,7 +224,7 @@ public class ControlServicio implements AcionesBasicas {
 			System.out.println(form.getServRecibido().getNombreServicio()+ "Modifica");
 			cargar();
 			estadoInicial(true);
-			
+			bandera = 1;
 		}
 
 		/// Visualiza
@@ -260,6 +282,8 @@ public class ControlServicio implements AcionesBasicas {
 	}
 	
 	private void recuperarItem(){
+		
+		
 		int v = form.getSerRecibido().getCodigoSer();
 		daoItem = new ServicioProductoDao();
 		listaItem = daoItem.recuperar(v);

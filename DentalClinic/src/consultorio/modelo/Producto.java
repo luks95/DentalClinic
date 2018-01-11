@@ -2,6 +2,8 @@ package consultorio.modelo;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -19,8 +21,18 @@ public class Producto implements Serializable {
 	private double PrecioCosto;
 	private String caracteris;
 	private double porcentaje;
+	
+	@Transient
+	private boolean b;
+	
 	private static final long serialVersionUID = 1L;
 
+	@OneToMany(mappedBy = "producto")
+	private List<Servicio> servicio;
+	
+	@OneToMany(mappedBy = "producto")
+	private List<Servcios_Productos> servicioProducto;
+	
 	public Producto() {
 		super();
 	}   
@@ -58,5 +70,25 @@ public class Producto implements Serializable {
 	public void setCaracteris(String caracteris) {
 		this.caracteris = caracteris;
 	}
+	public List<Servicio> getServicio() {
+		return servicio;
+	}
+	public void setServicio(List<Servicio> servicio) {
+		this.servicio = servicio;
+	}
+	public List<Servcios_Productos> getServicioProducto() {
+		return servicioProducto;
+	}
+	public void setServicioProducto(List<Servcios_Productos> servicioProducto) {
+		this.servicioProducto = servicioProducto;
+	}
+	public boolean getB() {
+		return b;
+	}
+	public void setB(boolean c) {
+		this.b = c;
+	}
+	
+	
    
 }

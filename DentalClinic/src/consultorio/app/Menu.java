@@ -193,6 +193,7 @@ public class Menu {
 		try {
 			daoLog.insertarOModificar(log);
 			daoLog.ejecutar();
+			System.out.println("APAGADO");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -32,7 +32,7 @@ public class Regenerar {
 	private static void Pruebausuarios(){
 		List<Usuario> usus = new ArrayList<>();
 		
-		Usuario usu = new Usuario();
+		//Usuario usu = new Usuario();
 		UsuarioDao daoUsu = new UsuarioDao();
 		usus = daoUsu.recuperarTodo();
 		/////

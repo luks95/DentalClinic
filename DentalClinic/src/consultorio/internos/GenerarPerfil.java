@@ -26,13 +26,13 @@ public class GenerarPerfil {
 			PerfilDao dao = new PerfilDao();
 			perfil = lista.get(i);
 			perfil.setId(perfil.getId());
-			;
 			perfil.setPerfilNombre(perfil.getPerfilNombre());
 			perfil.setPerfilDetalle(perfil.getPerfilDetalle());
 			try {
 				dao.insertarOModificar(perfil);
 				dao.ejecutar();
 			} catch (Exception e) {
+				dao.rollback();
 				e.printStackTrace();
 			}
 		}

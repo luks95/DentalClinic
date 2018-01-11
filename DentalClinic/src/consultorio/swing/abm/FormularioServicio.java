@@ -11,7 +11,11 @@ import consultorio.swing.componentes.TfGeneric;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+
+import consultorio.swing.componentes.CampoTextoPersonalizado;
 import consultorio.swing.componentes.GrupoBotonServicio;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FormularioServicio extends JDialog {
 
@@ -31,8 +35,8 @@ public class FormularioServicio extends JDialog {
 	private ControlServicio controller;
 	private GrupoBotonServicio grupoBotonServicio;
 	private JTextField tftotaProducto;
-	private TfGeneric tfCostoServ;
-	private TfGeneric tfcostoFi;
+	private CampoTextoPersonalizado tfCostoServ;
+	private CampoTextoPersonalizado tfcostoFi;
 
 	/**
 	 * Create the dialog.
@@ -110,14 +114,15 @@ public class FormularioServicio extends JDialog {
 		tftotaProducto.setBounds(133, 112, 180, 24);
 		getContentPane().add(tftotaProducto);
 		
-		tfCostoServ = new TfGeneric();
+		tfCostoServ = new CampoTextoPersonalizado();
+		tfCostoServ.recibeDecimales();
 		tfCostoServ.setColumns(10);
-		tfCostoServ.setBounds(133, 167, 180, 24);
+		tfCostoServ.setBounds(133, 167, 92, 24);
 		getContentPane().add(tfCostoServ);
 		
-		tfcostoFi = new TfGeneric();
+		tfcostoFi = new CampoTextoPersonalizado();
 		tfcostoFi.setColumns(10);
-		tfcostoFi.setBounds(133, 225, 180, 24);
+		tfcostoFi.setBounds(133, 225, 92, 24);
 		getContentPane().add(tfcostoFi);
 		
 		execute();
@@ -165,15 +170,15 @@ public class FormularioServicio extends JDialog {
 		return tftotaProducto;
 	}
 
-	public TfGeneric getTfCostoServ() {
+	public CampoTextoPersonalizado getTfCostoServ() {
 		return tfCostoServ;
 	}
 
-	public TfGeneric getTfcostoFi() {
+	public CampoTextoPersonalizado getTfcostoFi() {
 		return tfcostoFi;
 	}
 
-	public Servicio getProfRecibido() {
+	public Servicio getServRecibido() {
 		return serRecibido;
 	}
 	private void execute(){

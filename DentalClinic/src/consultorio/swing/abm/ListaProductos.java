@@ -37,7 +37,7 @@ public class ListaProductos extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListaProductos() {
-		setTitle("Lista de servicios");
+		setTitle("Lista de productos");
 		setBounds(100, 100, 932, 621);
 		
 		setModal(true);
@@ -105,7 +105,7 @@ public class ListaProductos extends JDialog {
 	private static void filtro(){
 		dao = new ProductoDao();	
 		lista = dao.recuperarPorFiltro(
-				herramientasGenericas.getTfBuscar().getText());
+		herramientasGenericas.getTfBuscar().getText());
 		mProductos.setLista(lista);
 		mProductos.fireTableDataChanged();
 	}
@@ -117,7 +117,7 @@ public class ListaProductos extends JDialog {
 	}
 	
 	private void modificar() {
-		 producto= new Producto();
+		producto= new Producto();
 		producto = lista.get(table.getSelectedRow());
 		formPro = new FormularioProducto(2, producto);
 		formPro.setVisible(true);

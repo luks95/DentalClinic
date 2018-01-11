@@ -42,6 +42,7 @@ public class FormularioProducto extends JDialog {
 	 *
 	 */
 	public FormularioProducto(int v, Producto p) {
+		setTitle("Formulario Producto");
 		this.vPr = v;
 		this.produRecibido = p;
 		

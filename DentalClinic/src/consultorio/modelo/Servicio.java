@@ -1,6 +1,8 @@
 package consultorio.modelo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -19,6 +21,12 @@ public class Servicio implements Serializable {
 	private int precio;
 	private String obs;
 
+	@OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Servcios_Productos> servicioProducto;
+
+	@ManyToOne
+	private Producto producto;
+	
 	public Servicio() {
 		super();
 	}
@@ -55,4 +63,21 @@ public class Servicio implements Serializable {
 		this.obs = obs;
 	}
 
+	public List<Servcios_Productos> getServicioProducto() {
+		return servicioProducto;
+	}
+
+	public void setServicioProducto(List<Servcios_Productos> servicioProducto) {
+		this.servicioProducto = servicioProducto;
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+	
+	
 }

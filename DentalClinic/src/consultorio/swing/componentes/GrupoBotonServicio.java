@@ -29,6 +29,7 @@ public class GrupoBotonServicio extends JPanel implements ActionListener , KeyLi
 	private JButton btnModificar;
 	private JScrollPane scrollPane;
 	private JTable table;
+	private ModeloTalblaSERProdu mServProdu;
 	public GrupoBotonServicio() {
 		setLayout(null);
 		
@@ -62,7 +63,8 @@ public class GrupoBotonServicio extends JPanel implements ActionListener , KeyLi
 		scrollPane.setBounds(10, 68, 355, 261);
 		add(scrollPane);
 		
-		table = new JTable();
+		mServProdu = new ModeloTalblaSERProdu();
+		table = new JTable(mServProdu);
 		scrollPane.setViewportView(table);
 		
 		setupEventManager();
@@ -127,6 +129,10 @@ public class GrupoBotonServicio extends JPanel implements ActionListener , KeyLi
 
 	public JTable getTable() {
 		return table;
+	}
+	
+	public ModeloTalblaSERProdu getmServProdu() {
+		return mServProdu;
 	}
 
 	//////// Unsused ////////

@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import consultorio.daos.ProductoDao;
 import consultorio.daos.ServicioDao;
+import consultorio.daos.ServicioProductoDao;
 import consultorio.interfece.AcionesBasicas;
+import consultorio.modelo.Producto;
+import consultorio.modelo.Servcios_Productos;
 import consultorio.modelo.Servicio;
 import consultorio.swing.abm.FormularioServicio;
 import consultorio.swing.abm.ListaServicios;
 import consultorio.swing.componentes.ComBasicos;
+import consultorio.util.NumberUtil;
 
 public class ControlServicio implements AcionesBasicas {
 	
@@ -18,6 +24,15 @@ public class ControlServicio implements AcionesBasicas {
 	private Servicio servicios;
 	private ServicioDao dao;
 	private List<JTextField> listaTf;
+	private ProductoDao daoProdu;
+	private ServicioProductoDao daoItem;
+	private List<Producto> listaProduc; 
+	private List<Producto> listaProduc2;
+	private List<Servcios_Productos> listaItem;
+	private Producto producto;
+	private Servcios_Productos servPro;
+	private List<Servcios_Productos> detalleServ;
+	
 	
 	public ControlServicio(FormularioServicio formPro, ListaServicios lForm) {
 		if(formPro == null){
@@ -27,6 +42,7 @@ public class ControlServicio implements AcionesBasicas {
 		} else /*if((lForm != null) || (formPro != null) || (form))*/{
 			this.form = formPro;
 			this.form.getGrupoBotonServicio().setAccionesBsicas(this);
+			recuperarProductos();
 			verify();
 
 		}
@@ -78,11 +94,8 @@ public class ControlServicio implements AcionesBasicas {
 				dao.ejecutar();
 				vaciar();
 				estadoInicial(false);
-				if(lServ != null){
-					ListaServicios.recuperarTodo();
-				}else{	
-					
-				}
+				ListaServicios.recuperarTodo();
+				
 			} catch (Exception e) {
 				dao.rollback();
 				e.printStackTrace();
@@ -96,6 +109,7 @@ public class ControlServicio implements AcionesBasicas {
 	public void cancelar() {
 		vaciar();
 		estadoInicial(false);
+		recuperarProductos();
 		form.getGrupoBotonServicio().getBtnModificar().setEnabled(false);
 	}
 	
@@ -114,6 +128,7 @@ public class ControlServicio implements AcionesBasicas {
 		form.getTfobs().setText("");
 		form.getLblCodigo().setText("");
 		ComBasicos.limpiarTf(listaTf);
+		recuperarProductos();
 	}
 	
 	private void estadoInicial(boolean b){
@@ -121,6 +136,7 @@ public class ControlServicio implements AcionesBasicas {
 		form.getTfCostoServ().setEnabled(b);
 		form.getTfcostoFi().setEnabled(b);
 		form.getTfobs().setEnabled(b);
+		form.getGrupoBotonServicio().getTable().setEnabled(b);
 		form.getGrupoBotonServicio().getBtnGuardar().setEnabled(b);
 		form.getGrupoBotonServicio().getBtnCancelar().setEnabled(b);
 		form.getGrupoBotonServicio().getBtnNuevo().setEnabled(b);
@@ -131,6 +147,39 @@ public class ControlServicio implements AcionesBasicas {
 		servicios = new Servicio();
 		servicios.setCodigoSer(Integer.parseInt(form.getLblCodigo().getText()));
 		servicios.setNombreServicio(form.getTfTipoNombre().getText());
+		servicios.setPrecio(NumberUtil.getValorInt(form.getTfCostoServ().getText()));
+		servicios.setObs(form.getTfobs().getText());
+		
+		//Cargar Lista de detalles y objeto servicio para posteriormente guardar(Cargando productos y servicio)
+		
+		cargarDetalles();
+		//servicios.setProducto(producto);
+		servicios.setServicioProducto(detalleServ);
+	}
+	
+	private void cargarDetalles(){
+		detalleServ = new ArrayList<>();
+		
+		recuperarSoloProducto();
+		recuperarItem(); 
+		for (int i = 0; i < listaProduc2.size(); i++) {
+			
+			for (int j = 0; j < listaItem.size(); j++) {
+				
+				if((form.getGrupoBotonServicio().getmServProdu().recuperarEstado(i)) == true &&
+						(servicios.getCodigoSer() != listaItem.get(j).getServicio().getCodigoSer())&&
+						(listaProduc2.get(i).getId() != listaItem.get(j).getProducto().getId())){
+					servPro = new Servcios_Productos();
+					producto = listaProduc2.get(i);
+					System.out.println("Producto sumado a la lista "+producto.getNombre());
+					servPro.setServicio(servicios);
+					servPro.setProducto(producto);
+					detalleServ.add(servPro);
+				}
+				
+			}	
+			
+		}
 		
 	}
 	
@@ -145,18 +194,19 @@ public class ControlServicio implements AcionesBasicas {
 			form.getGrupoBotonServicio().getBtnModificar().setEnabled(false);
 			form.getTfTipoNombre().requestFocus();
 			estadoInicial(true);
+			recuperarProductos();
 		}
 
 		/// Modifica
-		if ((form.getProfRecibido() != null) && (form.getvRe() == 2)) {
-			System.out.println(form.getProfRecibido().getNombreServicio()+ "Modifica");
+		if ((form.getServRecibido() != null) && (form.getvRe() == 2)) {
+			System.out.println(form.getServRecibido().getNombreServicio()+ "Modifica");
 			cargar();
 			estadoInicial(true);
 			
 		}
 
 		/// Visualiza
-		if ((form.getProfRecibido() != null) && (form.getvRe() == 3)) {
+		if ((form.getSerRecibido()!= null) && (form.getvRe() == 3)) {
 			cargar();
 			estadoInicial(false);
 			form.getGrupoBotonServicio().getBtnModificar().setEnabled(true);
@@ -165,22 +215,66 @@ public class ControlServicio implements AcionesBasicas {
 	}
 	
 	private void cargar(){
-		
-		
-		
-		if (form.getProfRecibido() != null) {
+		if (form.getSerRecibido() != null) {
 			double a, b;
 			a = form.getSerRecibido().getPrecio();
-			//FALTA TERMINAR RAPIDO!!!!! DEBES HACER LA CONSULTA A LOS DETALLES
+			
 			b = 0;
-			form.getLblCodigo().setText(form.getProfRecibido().getCodigoSer()+"");
-			form.getTfTipoNombre().setText(form.getProfRecibido().getNombreServicio());
-			form.getTfCostoServ().setText(form.getProfRecibido().getCodigoSer()+ "");
+			form.getLblCodigo().setText(form.getSerRecibido().getCodigoSer()+"");
+			form.getTfTipoNombre().setText(form.getSerRecibido().getNombreServicio());
+			form.getTfCostoServ().setText(form.getSerRecibido().getCodigoSer()+ "");
 			form.getTfcostoFi().setText(a+b +"");
-			form.getTfobs().setText(form.getProfRecibido().getObs());
+			form.getTfobs().setText(form.getSerRecibido().getObs());
+			recuperarTodo();
 		
 		}
 	}
+	private void recuperarTodo(){
+		recuperarSoloProducto();
+		recuperarItem();
+		if(!listaItem.isEmpty()){
+			for (int i = 0; i < listaProduc2.size(); i++) {
+				
+				for (int j = 0; j < listaItem.size(); j++) {
+					
+					if(form.getSerRecibido().getCodigoSer() == listaItem.get(j).getServicio().getCodigoSer()){
+						
+						if(listaProduc2.get(i).getId() == listaItem.get(j).getProducto().getId()){
+							listaProduc2.get(i).setB(true); 
+						}
+						
+					}
+				}
+				
+			}
+		}
+		form.getGrupoBotonServicio().getmServProdu().setListaAndItems(listaProduc2);
+		form.getGrupoBotonServicio().getmServProdu().fireTableDataChanged();
+	}
+	
+	private void recuperarProductos(){
+		daoProdu = new ProductoDao();
+		listaProduc = daoProdu.recuperarTodo();		
+		form.getGrupoBotonServicio().getmServProdu().setListaAndItems(listaProduc);
+		form.getGrupoBotonServicio().getmServProdu().fireTableDataChanged();
+	}
+	
+	private void recuperarItem(){
+		int v = form.getSerRecibido().getCodigoSer();
+		daoItem = new ServicioProductoDao();
+		listaItem = daoItem.recuperar(v);
+		for (int i = 0; i < listaItem.size(); i++) {
+			System.out.println(listaItem.get(i).getProducto().getNombre());
+		}
+	}
+	
+	// Busca en la tabla producctos sin hacer update en la tabla
+	private void recuperarSoloProducto(){
+		daoProdu = new ProductoDao();
+		listaProduc2 = daoProdu.recuperarTodo();
+	}
+	
+	
 //	private boolean validar(){
 //		boolean b = true;
 //		if(form.getTfNombre().getText().isEmpty() || form.getTfapellido().getText().isEmpty() 

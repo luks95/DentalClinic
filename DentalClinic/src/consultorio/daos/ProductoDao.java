@@ -22,7 +22,7 @@ public class ProductoDao extends DaoGenerico<Producto> {
 		instanciarCriteria();
 		criteriaQuery.where(
 				builder.or(builder.like(builder.lower(root.<String>get("nombre")), "%" + filtro.toLowerCase() + "%"),
-						builder.equal(root.<Integer>get("codigoSer"), filtroId)));
+						builder.equal(root.<Integer>get("id"), filtroId)));
 		lista = session.createQuery(criteriaQuery).getResultList();
 		cerrar();
 		System.out.println(lista);

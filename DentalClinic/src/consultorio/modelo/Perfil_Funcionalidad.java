@@ -32,6 +32,8 @@ public class Perfil_Funcionalidad implements Serializable {
 	@Column(name = "perf_Fun_reporte_complejo")
 	private Boolean reporteComplejo;
 
+	//////////////////////
+	/////////////////////
 	@ManyToOne
 	@JoinColumn(name = "perf_fun_id_perfil")
 	private Perfil perfil;
@@ -39,7 +41,9 @@ public class Perfil_Funcionalidad implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "perf_fun_id_funcionalidad")
 	private Funcionalidad funcionalidad;
-
+	/////////////////////////////
+	////////////////////////////
+	
 	private static final long serialVersionUID = 1L;
 
 	public Perfil_Funcionalidad() {

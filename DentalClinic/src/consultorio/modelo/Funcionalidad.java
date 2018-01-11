@@ -26,7 +26,6 @@ public class Funcionalidad implements Serializable {
 	@OneToMany(mappedBy = "funcionalidad")
 	private List<Perfil> perfil;
 
-	// bi-directional many-to-one association to ComboDetalle
 	@OneToMany(mappedBy = "funcionalidad")
 	private List<Perfil_Funcionalidad> perfilFunciones;
 

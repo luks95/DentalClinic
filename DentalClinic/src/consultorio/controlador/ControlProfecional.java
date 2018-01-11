@@ -84,11 +84,7 @@ public class ControlProfecional implements AcionesBasicas {
 				dao.ejecutar();
 				vaciar();
 				estadoInicial(false);
-				if(lProf != null){
-					ListaProfecionales.recuperarTodo();
-				}else{	
-					
-				}
+				ListaProfecionales.recuperarTodo();
 			} catch (Exception e) {
 				dao.rollback();
 				e.printStackTrace();

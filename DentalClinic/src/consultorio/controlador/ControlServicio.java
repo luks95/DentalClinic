@@ -66,7 +66,7 @@ public class ControlServicio implements AcionesBasicas {
 	public void modificar() {
 			form.getGrupoBotonServicio().getBtnModificar().setEnabled(false);
 			estadoInicial(true);
-			bandera = 0;
+			bandera = 1;
 	}
 
 	@Override
@@ -97,6 +97,7 @@ public class ControlServicio implements AcionesBasicas {
 			try {
 				dao.insertarOModificar(servicios);
 				dao.ejecutar();
+				
 				vaciar();
 				estadoInicial(false);
 				ListaServicios.recuperarTodo();
@@ -173,16 +174,20 @@ public class ControlServicio implements AcionesBasicas {
 				System.out.println("bandera 1");
 				recuperarItem(); 
 				for (int j = 0; j < listaItem.size(); j++) {
-				
-					if((form.getGrupoBotonServicio().getmServProdu().recuperarEstado(i)) == true &&
-							(servicios.getCodigoSer() != listaItem.get(j).getServicio().getCodigoSer())&&
-							(listaProduc2.get(i).getId() != listaItem.get(j).getProducto().getId())){
-						servPro = new Servcios_Productos();
-						producto = listaProduc2.get(i);
-						System.out.println("Producto sumado a la lista "+producto.getNombre());
-						servPro.setServicio(servicios);
-						servPro.setProducto(producto);
-						detalleServ.add(servPro);
+					System.out.println("entra ahora " +form.getSerRecibido().getCodigoSer()+" "
+				+listaItem.get(j).getServicio().getCodigoSer()+" "+form.getGrupoBotonServicio().getmServProdu().recuperarEstado(i));
+					if(form.getGrupoBotonServicio().getmServProdu().recuperarEstado(i) == true){
+						System.out.println("el objeto en esta posicion esta true ");
+						if(form.getSerRecibido().getCodigoSer() != listaItem.get(j).getServicio().getCodigoSer()){
+							System.out.println("EUREKA ");
+							servPro = new Servcios_Productos();
+							producto = listaProduc2.get(i);
+							System.out.println("Producto sumado a la lista "+producto.getNombre());
+							servPro.setServicio(servicios);
+							servPro.setProducto(producto);
+							detalleServ.add(servPro);
+						}
+						
 					}
 				}	
 			} else{	
@@ -201,8 +206,6 @@ public class ControlServicio implements AcionesBasicas {
 							
 		}
 	}
-		
-	
 	
 	private void verify() {
 		/// verify() se encarga de realizar acciones dependiendo de lo que recibe ListaProfecionales()
@@ -282,8 +285,6 @@ public class ControlServicio implements AcionesBasicas {
 	}
 	
 	private void recuperarItem(){
-		
-		
 		int v = form.getSerRecibido().getCodigoSer();
 		daoItem = new ServicioProductoDao();
 		listaItem = daoItem.recuperar(v);

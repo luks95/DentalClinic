@@ -1,6 +1,6 @@
 package consultorio.daos;
 
-import java.util.List;
+import java.util.List; 
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
